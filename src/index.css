@@ -1,0 +1,123 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/*
+ * Tokens do DESIGN.md (CESAR) mapeados para as variáveis semânticas do shadcn/ui.
+ * Sempre use o papel (ex.: bg-tertiary, text-secondary) — nunca o hex literal nos componentes.
+ */
+:root {
+  /* colors (DESIGN.md) */
+  --cesar-primary: #201813;
+  --cesar-secondary: #7b675b;
+  --cesar-tertiary: #f76003;
+  --cesar-neutral: #f7f8f9;
+  --cesar-surface: #ffffff;
+  --cesar-on-tertiary: #ffffff;
+  --cesar-border: #e8e5e3;
+  /* Variante escura do tertiary para TEXTO sobre fundos claros: #F76003 tem 3,17:1
+     sobre branco e não atinge o WCAG AA (4,5:1). Esta tem 5,1:1 sobre surface e 4,8:1 sobre neutral. */
+  --cesar-tertiary-text: #bf4700;
+
+  /* rounded (DESIGN.md) */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+
+  /* spacing (DESIGN.md) */
+  --spacing-sm: 8px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+
+  /* shadcn/ui — variáveis semânticas */
+  --background: var(--cesar-neutral);
+  --foreground: var(--cesar-primary);
+  --card: var(--cesar-surface);
+  --card-foreground: var(--cesar-primary);
+  --popover: var(--cesar-surface);
+  --popover-foreground: var(--cesar-primary);
+  --primary: var(--cesar-tertiary);
+  --primary-foreground: var(--cesar-on-tertiary);
+  --secondary: var(--cesar-neutral);
+  --secondary-foreground: var(--cesar-primary);
+  --muted: var(--cesar-neutral);
+  --muted-foreground: var(--cesar-secondary);
+  --accent: var(--cesar-neutral);
+  --accent-foreground: var(--cesar-primary);
+  --destructive: #d43f21;
+  --border: var(--cesar-border);
+  --input: var(--cesar-border);
+  --ring: var(--cesar-tertiary);
+  --radius: var(--radius-md);
+}
+
+@theme inline {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Papéis de marca do DESIGN.md */
+  --color-brand-primary: var(--cesar-primary);
+  --color-brand-secondary: var(--cesar-secondary);
+  --color-tertiary: var(--cesar-tertiary);
+  --color-on-tertiary: var(--cesar-on-tertiary);
+  --color-tertiary-text: var(--cesar-tertiary-text);
+  --color-neutral: var(--cesar-neutral);
+  --color-surface: var(--cesar-surface);
+
+  /* Variáveis do shadcn/ui */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-md);
+
+  --spacing-sm: var(--spacing-sm);
+  --spacing-md: var(--spacing-md);
+  --spacing-lg: var(--spacing-lg);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  /* Foco visível na cor de destaque da marca; o offset separa o contorno do fundo laranja dos botões. */
+  :focus-visible {
+    outline: 2px solid var(--cesar-tertiary);
+    outline-offset: 2px;
+  }
+  body {
+    @apply bg-background text-foreground font-sans text-base leading-6 antialiased;
+  }
+}
+
+@layer utilities {
+  /* typography.label-caps */
+  .label-caps {
+    @apply text-xs font-semibold uppercase tracking-wider;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
