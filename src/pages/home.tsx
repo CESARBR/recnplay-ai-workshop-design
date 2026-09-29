@@ -1,4 +1,4 @@
-import { ArrowRight, FileDown, MapPin, Palette } from 'lucide-react'
+import { ArrowRight, FolderDown, MapPin, Palette } from 'lucide-react'
 import { Link } from 'react-router'
 
 import { PageHeader } from '@/components/layout/page-header'
@@ -39,19 +39,19 @@ export function HomePage() {
       <div className="grid gap-md md:grid-cols-2">
         <Card>
           <CardHeader>
-            <FileDown className="size-6 text-tertiary" aria-hidden />
+            <FolderDown className="size-6 text-tertiary" aria-hidden />
             <CardTitle asChild>
-              <h2>AGENTS.md</h2>
+              <h2>Projetos</h2>
             </CardTitle>
             <CardDescription>
-              Baixe os arquivos de instruções que vamos usar com as ferramentas de IA durante a
-              oficina.
+              Baixe o projeto do app que você vai prototipar: briefing, skills e pastas prontas para
+              usar com a ferramenta de IA.
             </CardDescription>
           </CardHeader>
           <CardFooter>
             <Button asChild>
-              <Link to="/agentsmd">
-                Ver arquivos <ArrowRight />
+              <Link to="/projetos">
+                Ver projetos <ArrowRight />
               </Link>
             </Button>
           </CardFooter>

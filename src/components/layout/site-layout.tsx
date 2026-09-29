@@ -1,16 +1,24 @@
-import { useEffect, useRef } from 'react'
-import { NavLink, Outlet, ScrollRestoration, useLocation } from 'react-router'
+import { Suspense, useEffect, useRef } from 'react'
+import { NavLink, Outlet, ScrollRestoration, useLocation, useMatches } from 'react-router'
 
 import { cn } from '@/lib/utils'
 
 const navItems = [
   { to: '/', label: 'Início', end: true },
-  { to: '/agentsmd', label: 'AGENTS.md' },
+  { to: '/projetos', label: 'Projetos' },
   { to: '/designmd', label: 'DESIGN.md' },
 ]
 
+/** Opções de layout que cada rota pode declarar em `handle`. */
+export type SiteRouteHandle = {
+  /** Usa a largura máxima maior (ferramentas com editor e painel lado a lado). */
+  wide?: boolean
+}
+
 export function SiteLayout() {
   const { pathname } = useLocation()
+  const isWide = useMatches().some((match) => (match.handle as SiteRouteHandle | undefined)?.wide)
+  const containerWidth = isWide ? 'max-w-7xl' : 'max-w-5xl'
   const mainRef = useRef<HTMLElement>(null)
   const isFirstRender = useRef(true)
 
@@ -39,7 +47,12 @@ export function SiteLayout() {
       </a>
 
       <header className="border-b bg-surface">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-sm px-md py-4">
+        <div
+          className={cn(
+            'mx-auto flex flex-wrap items-center justify-between gap-sm px-md py-4',
+            containerWidth,
+          )}
+        >
           <NavLink to="/" className="flex items-center rounded-sm">
             <img
               src={`${import.meta.env.BASE_URL}logo.webp`}
@@ -80,13 +93,21 @@ export function SiteLayout() {
         id="conteudo"
         ref={mainRef}
         tabIndex={-1}
-        className="mx-auto w-full max-w-5xl flex-1 px-md py-lg focus:outline-none"
+        className={cn('mx-auto w-full flex-1 px-md py-lg focus:outline-none', containerWidth)}
       >
-        <Outlet />
+        <Suspense
+          fallback={
+            <p role="status" className="text-muted-foreground">
+              Carregando…
+            </p>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
 
       <footer className="border-t bg-surface">
-        <div className="mx-auto max-w-5xl px-md py-md text-sm text-muted-foreground">
+        <div className={cn('mx-auto px-md py-md text-sm text-muted-foreground', containerWidth)}>
           © 2026 CESAR
         </div>
       </footer>

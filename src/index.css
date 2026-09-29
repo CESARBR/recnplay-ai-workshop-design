@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* Lê classes só de src/ (evita varrer docs/, o build publicado, e os .md do projeto). */
+@import "tailwindcss" source("./");
 @import "tw-animate-css";
 
 /*
@@ -22,7 +23,10 @@
   --radius-sm: 6px;
   --radius-md: 12px;
 
-  /* spacing (DESIGN.md) */
+  /* spacing (DESIGN.md)
+   * Atenção: como estes nomes existem na escala de espaçamento, o Tailwind resolve
+   * `max-w-sm`, `max-w-md` e `max-w-lg` (e `w-*`, `h-*`…) como 8px, 24px e 32px, e não como as
+   * larguras de container. Para larguras, use valores explícitos, como `max-w-[32rem]`. */
   --spacing-sm: 8px;
   --spacing-md: 24px;
   --spacing-lg: 32px;
@@ -42,7 +46,8 @@
   --muted-foreground: var(--cesar-secondary);
   --accent: var(--cesar-neutral);
   --accent-foreground: var(--cesar-primary);
-  --destructive: #d43f21;
+  /* #B3261E: 6,5:1 sobre surface e 6,2:1 sobre neutral (o anterior, #d43f21, tinha 4,4:1 sobre neutral). */
+  --destructive: #b3261e;
   --border: var(--cesar-border);
   --input: var(--cesar-border);
   --ring: var(--cesar-tertiary);
@@ -93,6 +98,15 @@
 @layer base {
   * {
     @apply border-border;
+  }
+  /* Cursor de clique em todos os elementos clicáveis (o preflight do Tailwind v4 usa o padrão).
+     Botões bloqueados mantêm o cursor de "não permitido" (utilitário do Button). */
+  button:not(:disabled),
+  [role='button'],
+  [role='tab'],
+  summary,
+  select:not(:disabled) {
+    cursor: pointer;
   }
   /* Foco visível na cor de destaque da marca; o offset separa o contorno do fundo laranja dos botões. */
   :focus-visible {
